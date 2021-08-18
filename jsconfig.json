@@ -1,0 +1,27 @@
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "module": "commonJS",
+    "target": "es6",
+    "jsx": "react",
+    "paths": {
+      "@pokemon/*": ["./src/*"],
+      "@pokemon-svg": ["./src/assets/svg/index"],
+      "@pokemon-component/*": ["./src/component/*"],
+      "@pokemon-images": ["./src/assets/images/index"],
+      "@pokemon-component-layout": ["./src/component/layouts/index"],
+      "@pokemon-component-layout/*": ["./src/component/layouts/*"],
+      "@pokemon-component-svg": ["./src/component/svg/index"],
+      "@pokemon-component-svg/*": ["./src/component/svg/*"],
+      "@pokemon-component-card": ["./src/component/cards/index"],
+      "@pokemon-component-card/": ["./src/component/cards/*"],
+      "@pokemon-component-input": ["./src/component/inputs/index"],
+      "@pokemon-component-input/*": ["./src/component/inputs/*"],
+      "@pokemon-redux": ["./src/redux/index"],
+      "@pokemon-redux/*": ["./src/redux/*"],
+      "@pokemon-navigation": ["./src/navigation/index"],
+      "@pokemon-navigation/*": ["./src/navigation/*"],
+      "@pokemon-utils/*": ["./src/utils/*"]
+    }
+  }
+}
