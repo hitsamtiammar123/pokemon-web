@@ -219,7 +219,7 @@ export default function Detail({ loading, pokemon, type, onPokemonBtnClick }) {
                     return r;
                   })()
                 : null}
-              <div className="d-flex flex-row justify-content-between text-container">
+              <div className="d-flex flex-column text-container">
                 <p>Abilities</p>
                 {pokemon.abilities ? (
                   <ul>
@@ -229,7 +229,7 @@ export default function Detail({ loading, pokemon, type, onPokemonBtnClick }) {
                   </ul>
                 ) : null}
               </div>
-              <div className="d-flex flex-row justify-content-between text-container">
+              <div className="d-flex flex-column text-container">
                 <p>Moves</p>
                 {pokemon.moves ? (
                   <ul>
@@ -239,7 +239,7 @@ export default function Detail({ loading, pokemon, type, onPokemonBtnClick }) {
                   </ul>
                 ) : null}
               </div>
-              <div className="d-flex flex-row justify-content-between text-container">
+              <div className="d-flex flex-column text-container">
                 <p>versions</p>
                 {pokemon.versions ? (
                   <ul>
@@ -249,7 +249,7 @@ export default function Detail({ loading, pokemon, type, onPokemonBtnClick }) {
                   </ul>
                 ) : null}
               </div>
-              <div className="d-flex flex-row justify-content-between text-container">
+              <div className="d-flex flex-column text-container">
                 <p>Types</p>
                 {pokemon.types ? (
                   <ul>

@@ -1,11 +1,32 @@
 import * as CONST from './constants';
 
-const initialStates = {
+const pokemonInitialStates = {
   mypokemon: [],
   action: '',
 };
 
-function pokemonReducer(state = initialStates, action) {
+const listInitialStates = {
+  list: [],
+  offset: 0,
+  action: '',
+};
+
+function listReducer(state = listInitialStates, action) {
+  const { type, payload } = action;
+  switch (type) {
+    case CONST.ADD_LIST:
+      return {
+        ...state,
+        list: state.list.concat(payload.list),
+        offset: payload.offset,
+        action: type,
+      };
+    default:
+  }
+  return state;
+}
+
+function pokemonReducer(state = pokemonInitialStates, action) {
   const { type, payload } = action;
 
   switch (type) {
@@ -28,4 +49,5 @@ function pokemonReducer(state = initialStates, action) {
   return state;
 }
 
+export { listReducer };
 export default pokemonReducer;

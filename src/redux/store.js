@@ -1,10 +1,11 @@
 import { combineReducers, createStore, compose } from 'redux';
 import { persistStore, persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
-import pokemonReducer from './pokemon/reducer';
+import pokemonReducer, { listReducer } from './pokemon/reducer';
 
 const reducers = combineReducers({
   pokemon: pokemonReducer,
+  list: listReducer,
 });
 
 const composeEnhancer =
