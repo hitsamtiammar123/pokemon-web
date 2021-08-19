@@ -1,9 +1,11 @@
 import React, { lazy, Suspense } from 'react';
 import { AnimatePresence } from 'framer-motion';
 import { Col, Row, Container } from 'reactstrap';
-import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom';
+import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import { Header } from '@pokemon-component-layout';
 import './styles.scss';
+
+const Landing = lazy(() => import('@pokemon-module/screens/Landing'));
 
 function Fallback() {
   return (
@@ -26,7 +28,9 @@ function App() {
                   <Suspense fallback={<Fallback />}>
                     <Switch>
                       {/** Redirect into default page */}
-                      <Redirect exact from="/" to="/" />
+                      <Route exact path="/">
+                        <Landing />
+                      </Route>
                     </Switch>
                   </Suspense>
                 </div>

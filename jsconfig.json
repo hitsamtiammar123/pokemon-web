@@ -21,7 +21,8 @@
       "@pokemon-redux/*": ["./src/redux/*"],
       "@pokemon-navigation": ["./src/navigation/index"],
       "@pokemon-navigation/*": ["./src/navigation/*"],
-      "@pokemon-utils/*": ["./src/utils/*"]
+      "@pokemon-utils/*": ["./src/utils/*"],
+      "@pokemon-module/*": ["./src/module/pages/*"]
     }
   }
 }

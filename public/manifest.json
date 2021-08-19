@@ -1,6 +1,6 @@
 {
-  "short_name": "volta-web",
-  "name": "Volta Web",
+  "short_name": "pokemon-web",
+  "name": "Pokemon Web",
   "icons": [
     {
       "src": "favicon.ico",

@@ -21,6 +21,7 @@ module.exports = {
       ),
       '@pokemon-component-input': path.resolve(__dirname, 'src/component/inputs'),
       '@pokemon-utils': path.resolve(__dirname, 'src/utils'),
+      '@pokemon-module': path.resolve(__dirname, 'src/module/pages'),
     },
   },
 };
