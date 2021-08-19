@@ -7,6 +7,8 @@ let BASE_URL,
 if (process.env.NODE_ENV && process.env.NODE_ENV === 'development') {
   BASE_URL = 'http://localhost:3001';
   isDev = true;
+} else {
+  BASE_URL = 'https://infinite-stream-41768.herokuapp.com';
 }
 
 const api = axios.create({
