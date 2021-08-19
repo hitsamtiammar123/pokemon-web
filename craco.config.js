@@ -5,6 +5,7 @@ module.exports = {
     alias: {
       '@pokemon': path.resolve(__dirname, 'src'),
       '@pokemon-component': path.resolve(__dirname, 'src/component'),
+      '@pokemon-lottie': path.resolve(__dirname, 'src/assets/lottie'),
       '@pokemon-svg': path.resolve(__dirname, 'src/assets/svg/index'),
       '@pokemon-images': path.resolve(__dirname, 'src/assets/images/index'),
       '@pokemon-navigation': path.resolve(__dirname, 'src/navigation'),

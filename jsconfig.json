@@ -7,6 +7,8 @@
     "paths": {
       "@pokemon/*": ["./src/*"],
       "@pokemon-svg": ["./src/assets/svg/index"],
+      "@pokemon-lottie": ["./src/assets/lottie/index"],
+      "@pokemon-lottie/*": ["./src/assets/lottie/*"],
       "@pokemon-component/*": ["./src/component/*"],
       "@pokemon-images": ["./src/assets/images/index"],
       "@pokemon-component-layout": ["./src/component/layouts/index"],
