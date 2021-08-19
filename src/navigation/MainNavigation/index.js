@@ -1,5 +1,4 @@
 import React, { lazy, Suspense } from 'react';
-import { AnimatePresence } from 'framer-motion';
 import { Col, Row, Container } from 'reactstrap';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import { Header } from '@pokemon-component-layout';
@@ -24,34 +23,32 @@ function App() {
   return (
     <Container fluid>
       <BrowserRouter>
-        <AnimatePresence>
-          <Col sm="12">
-            <Row>
-              <Col className="content bg-background" sm="12">
-                <Header />
-                <div className="main-content">
-                  <Suspense fallback={<Fallback />}>
-                    <Switch>
-                      {/** Redirect into default page */}
-                      <Route exact path="/">
-                        <Landing />
-                      </Route>
-                      <Route exact path="/detail/:id">
-                        <Detail />
-                      </Route>
-                      <Route exact path="/mypokemon">
-                        <MyPokemon />
-                      </Route>
-                      <Route exact path="/detail/:id/mypokemon">
-                        <MyPokemonDetail />
-                      </Route>
-                    </Switch>
-                  </Suspense>
-                </div>
-              </Col>
-            </Row>
-          </Col>
-        </AnimatePresence>
+        <Col sm="12">
+          <Row>
+            <Col className="content bg-background" sm="12">
+              <Header />
+              <div className="main-content">
+                <Suspense fallback={<Fallback />}>
+                  <Switch>
+                    {/** Redirect into default page */}
+                    <Route exact path="/">
+                      <Landing />
+                    </Route>
+                    <Route exact path="/detail/:id">
+                      <Detail />
+                    </Route>
+                    <Route exact path="/mypokemon">
+                      <MyPokemon />
+                    </Route>
+                    <Route exact path="/detail/:id/mypokemon">
+                      <MyPokemonDetail />
+                    </Route>
+                  </Switch>
+                </Suspense>
+              </div>
+            </Col>
+          </Row>
+        </Col>
       </BrowserRouter>
     </Container>
   );

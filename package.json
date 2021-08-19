@@ -1,5 +1,5 @@
 {
-  "name": "volta-web-app",
+  "name": "pokemon-for-phincon",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -9,7 +9,6 @@
     "@testing-library/user-event": "^12.1.10",
     "axios": "^0.21.1",
     "bootstrap": "^5.0.2",
-    "framer-motion": "^4.1.17",
     "moment": "^2.29.1",
     "prop-types": "^15.7.2",
     "react": "^17.0.2",
