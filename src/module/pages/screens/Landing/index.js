@@ -35,7 +35,10 @@ export default function Landing() {
       <Row className="my-5">
         {range(12).map((i) => (
           <Col key={i} className={`pokemon ${i % 2 === 0 ? 'odd' : ''}`} sm="5">
-            <Link to="/" className="d-flex flex-row align-items-center">
+            <Link
+              to={`/detail/${i}`}
+              className="d-flex flex-row align-items-center"
+            >
               <img
                 src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/9.png"
                 className="poke-img"

@@ -6,6 +6,7 @@ import { Header } from '@pokemon-component-layout';
 import './styles.scss';
 
 const Landing = lazy(() => import('@pokemon-module/screens/Landing'));
+const Detail = lazy(() => import('@pokemon-module/screens/Detail'));
 
 function Fallback() {
   return (
@@ -30,6 +31,9 @@ function App() {
                       {/** Redirect into default page */}
                       <Route exact path="/">
                         <Landing />
+                      </Route>
+                      <Route exact path="/detail/:id">
+                        <Detail />
                       </Route>
                     </Switch>
                   </Suspense>
