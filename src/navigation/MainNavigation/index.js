@@ -7,6 +7,10 @@ import './styles.scss';
 
 const Landing = lazy(() => import('@pokemon-module/screens/Landing'));
 const Detail = lazy(() => import('@pokemon-module/screens/Detail'));
+const MyPokemon = lazy(() => import('@pokemon-module/screens/MyPokemon'));
+const MyPokemonDetail = lazy(() =>
+  import('@pokemon-module/screens/MyPokemonDetail')
+);
 
 function Fallback() {
   return (
@@ -34,6 +38,12 @@ function App() {
                       </Route>
                       <Route exact path="/detail/:id">
                         <Detail />
+                      </Route>
+                      <Route exact path="/mypokemon">
+                        <MyPokemon />
+                      </Route>
+                      <Route exact path="/detail/:id/mypokemon">
+                        <MyPokemonDetail />
                       </Route>
                     </Switch>
                   </Suspense>

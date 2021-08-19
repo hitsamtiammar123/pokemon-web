@@ -1,14 +1,17 @@
 import React, { useState } from 'react';
+import PropTypes from 'prop-types';
+import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { Row, Col, FormGroup, Input, Button } from 'reactstrap';
 import Lottie from 'react-lottie';
 import { Loading } from '@pokemon-component-svg';
 import { Pikachu, Tortoise } from '@pokemon-lottie';
+import { addPokemon } from '@pokemon-redux/pokemon/actions';
 import './styles.scss';
 
-export default function Detail() {
+export default function Detail({ loading, pokemon, type, onPokemonBtnClick }) {
   const history = useHistory();
-  const [loading, setLoading] = useState(false);
+  const dispatch = useDispatch();
   const [cathingPokemonFlag, setCathingPokemonFlag] = useState(-1);
   const [nickname, setNickName] = useState('');
 
@@ -33,14 +36,35 @@ export default function Detail() {
     );
   }
 
+  function submitAfterCatch() {
+    const newPokemon = {
+      ...pokemon,
+      name: nickname,
+      index: pokemon.id + '-' + new Date().getTime(),
+    };
+    dispatch(addPokemon(newPokemon));
+    history.push('/');
+  }
+
+  function cathingPokemon() {
+    setCathingPokemonFlag(0);
+    setTimeout(() => {
+      const r = Math.floor(Math.random() * 100);
+      let n;
+      if (r < 50) {
+        n = 2;
+      } else {
+        n = 1;
+      }
+      setCathingPokemonFlag(n);
+    }, 4500);
+  }
+
   function renderSucceededCathingPokemon() {
     return (
       <div className="detail-pokemon">
         <div className="d-flex flex-column align-items-center mb-5">
-          <img
-            src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/9.png"
-            className="poke-img"
-          />
+          <img src={pokemon.img} className="poke-img" />
         </div>
         <div className="d-flex flex-column align-items-center">
           <div className="col-8">
@@ -61,10 +85,10 @@ export default function Detail() {
               <Button
                 disabled={nickname === ''}
                 color="success"
-                onClick={() => history.push('/')}
+                onClick={submitAfterCatch}
                 className="mt-4 flex-1"
               >
-                Submit
+                Save
               </Button>
             </div>
           </div>
@@ -77,10 +101,7 @@ export default function Detail() {
     return (
       <div className="detail-pokemon">
         <div className="d-flex flex-column align-items-center mb-5">
-          <img
-            src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/9.png"
-            className="poke-img"
-          />
+          <img src={pokemon.img} className="poke-img" />
         </div>
         <div className="d-flex flex-column align-items-center">
           <div className="col-8">
@@ -109,18 +130,24 @@ export default function Detail() {
     );
   }
 
-  function cathingPokemon() {
-    setCathingPokemonFlag(0);
-    setTimeout(() => {
-      const r = Math.floor(Math.random() * 100);
-      let n;
-      if (r < 50) {
-        n = 2;
-      } else {
-        n = 1;
-      }
-      setCathingPokemonFlag(n);
-    }, 4500);
+  function renderPokemonBtn() {
+    let btnClass, onClick, title;
+
+    if (type === 'mypokemon') {
+      btnClass = 'btn-danger';
+      onClick = onPokemonBtnClick;
+      title = 'Release';
+    } else {
+      btnClass = 'btn-primary';
+      onClick = cathingPokemon;
+      title = 'Catch';
+    }
+
+    return (
+      <button onClick={onClick} className={`btn ${btnClass} btn-catch`}>
+        {title}
+      </button>
+    );
   }
 
   if (loading) {
@@ -143,77 +170,94 @@ export default function Detail() {
     }
   }
 
+  if (typeof pokemon !== 'object') {
+    return (
+      <div className="d-flex flex-column align-items-center">
+        <h2>Pokemon not found</h2>
+      </div>
+    );
+  }
+
   return (
     <div className="col-12 detail-pokemon">
       <Row className="my-5">
         <Col className="d-flex flex-column align-items-center" sm="4">
-          <img
-            src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/9.png"
-            className="poke-img"
-          />
-          <button
-            onClick={cathingPokemon}
-            className="btn btn-primary btn-catch"
-          >
-            Catch
-          </button>
+          <img src={pokemon.img} className="poke-img" />
+          {renderPokemonBtn()}
         </Col>
         <Col className="px-5" sm="8">
-          <h1 className="text-bold pokemon-name">Gilbolo</h1>
+          <h1 className="text-bold pokemon-name">{pokemon.name}</h1>
           <div className="d-flex flex-row flex-1">
             <div className="d-flex flex-column flex-1 mt-5 poke-detail">
               <div className="d-flex flex-row justify-content-between text-container">
                 <p>Species</p>
-                <p>Glibolo</p>
+                <p>{pokemon.species}</p>
               </div>
               <div className="d-flex flex-row justify-content-between text-container">
                 <p>EXP</p>
-                <p>178</p>
+                <p>{pokemon.base_experience}</p>
               </div>
               <div className="d-flex flex-row justify-content-between text-container">
                 <p>height</p>
-                <p>11</p>
+                <p>{pokemon.height}</p>
               </div>
-              <div className="d-flex flex-row justify-content-between text-container">
-                <p>hp</p>
-                <p>60</p>
-              </div>
-              <div className="d-flex flex-row justify-content-between text-container">
-                <p>hp</p>
-                <p>60</p>
-              </div>
-              <div className="d-flex flex-row justify-content-between text-container">
-                <p>hp</p>
-                <p>60</p>
-              </div>
-              <div className="d-flex flex-row justify-content-between text-container">
-                <p>hp</p>
-                <p>60</p>
-              </div>
-            </div>
-            <div className="d-flex flex-column flex-1 mt-5 poke-detail">
+              {pokemon.stats
+                ? (() => {
+                    const r = [];
+                    for (let i in pokemon.stats) {
+                      const stat = pokemon.stats[i];
+                      r.push(
+                        <div
+                          key={i}
+                          className="d-flex flex-row justify-content-between text-container"
+                        >
+                          <p>{i}</p>
+                          <p>{stat}</p>
+                        </div>
+                      );
+                    }
+                    return r;
+                  })()
+                : null}
               <div className="d-flex flex-row justify-content-between text-container">
                 <p>Abilities</p>
-                <ul>
-                  <li>compound-eyes</li>
-                  <li>tinted-lens</li>
-                </ul>
+                {pokemon.abilities ? (
+                  <ul>
+                    {pokemon.abilities.map((ability, index) => (
+                      <li key={index}>{ability}</li>
+                    ))}
+                  </ul>
+                ) : null}
               </div>
               <div className="d-flex flex-row justify-content-between text-container">
                 <p>Moves</p>
-                <ul>
-                  <li>Moves 1</li>
-                  <li>Moves 2</li>
-                  <li>Moves 3</li>
-                  <li>Moves 4</li>
-                </ul>
+                {pokemon.moves ? (
+                  <ul>
+                    {pokemon.moves.map((move, index) => (
+                      <li key={index}>{move}</li>
+                    ))}
+                  </ul>
+                ) : null}
               </div>
               <div className="d-flex flex-row justify-content-between text-container">
                 <p>versions</p>
-                <ul>
-                  <li>v 1</li>
-                  <li>v 2</li>
-                </ul>
+                {pokemon.versions ? (
+                  <ul>
+                    {pokemon.versions.map((v, index) => (
+                      <li key={index}>{v}</li>
+                    ))}
+                  </ul>
+                ) : null}
+              </div>
+              <div className="d-flex flex-row justify-content-between text-container">
+                <p>Types</p>
+                {pokemon.types ? (
+                  <ul>
+                    {pokemon.types.map((v, index) => (
+                      <li key={index}>{v}</li>
+                    ))}
+                  </ul>
+                ) : null}
               </div>
             </div>
           </div>
@@ -222,3 +266,17 @@ export default function Detail() {
     </div>
   );
 }
+
+Detail.defaultProps = {
+  loading: false,
+  pokemon: {},
+  type: 'default',
+  onPokemonBtnClick: () => {},
+};
+
+Detail.propTypes = {
+  loading: PropTypes.bool,
+  pokemon: PropTypes.objectOf(Object),
+  type: PropTypes.string,
+  onPokemonBtnClick: PropTypes.func,
+};

@@ -2,11 +2,17 @@ import React, { useRef } from 'react';
 import PropTypes from 'prop-types';
 import { Row, Col } from 'reactstrap';
 import { Link } from 'react-router-dom';
-import { range } from '@pokemon-utils/helper';
 import { Loading } from '@pokemon-component-svg';
 import './styles.scss';
 
-export default function Landing({ loading, onClickMorePressed }) {
+export default function Landing({
+  loading,
+  onClickMorePressed,
+  list,
+  title,
+  showLoadMore,
+  detailRedirect,
+}) {
   const mainWrapper = useRef();
 
   function renderLoading() {
@@ -17,53 +23,57 @@ export default function Landing({ loading, onClickMorePressed }) {
         </div>
       );
     }
-    return (
-      <Col className="mt-4" sm={12}>
-        <button
-          onClick={onClickMorePressed}
-          className="btn btn-primary btn-load-more"
-        >
-          Click Here To Load more
-        </button>
-      </Col>
-    );
+    if (showLoadMore) {
+      return (
+        <Col className="mt-4" sm={12}>
+          <button
+            onClick={onClickMorePressed}
+            className="btn btn-primary btn-load-more"
+          >
+            Click Here To Load more
+          </button>
+        </Col>
+      );
+    }
+    return null;
   }
 
   return (
     <div ref={mainWrapper} className="col-12 landing-pokemon">
-      <p className="text-primary text-bold text-center title">List Pokemon</p>
+      <p className="text-primary text-bold text-center title">{title}</p>
       <Row className="my-5">
-        {range(12).map((i) => (
-          <Col key={i} className={`pokemon ${i % 2 === 0 ? 'odd' : ''}`} sm="5">
+        {list.map((pokemon, index) => (
+          <Col
+            key={pokemon.id + '-' + index}
+            className={`pokemon ${index % 2 === 0 ? 'odd' : ''}`}
+            sm="5"
+          >
             <Link
-              to={`/detail/${i}`}
+              to={detailRedirect(pokemon)}
               className="d-flex flex-row align-items-center"
             >
-              <img
-                src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/9.png"
-                className="poke-img"
-              />
+              <img src={pokemon.img} className="poke-img" />
               <div className="flex-1">
-                <h3 className="text-bold">Gilbolo</h3>
+                <h3 className="text-bold">{pokemon.name}</h3>
                 <div className="d-flex flex-row mt-4">
                   <div className="d-flex flex-column text-container">
                     <div className="d-flex flex-row content">
                       <p>Exp: </p>
-                      <p>239</p>
+                      <p>{pokemon.base_experience}</p>
                     </div>
                     <div className="d-flex flex-row content">
                       <p>Height: </p>
-                      <p>16</p>
+                      <p>{pokemon.height}</p>
                     </div>
                   </div>
                   <div className="d-flex flex-column text-container">
                     <div className="d-flex flex-row content">
                       <p>Species: </p>
-                      <p>Gilbolo</p>
+                      <p>{pokemon.species}</p>
                     </div>
                     <div className="d-flex flex-row content">
                       <p>Weight: </p>
-                      <p>20</p>
+                      <p>{pokemon.weight}</p>
                     </div>
                   </div>
                 </div>
@@ -80,9 +90,17 @@ export default function Landing({ loading, onClickMorePressed }) {
 Landing.defaultProps = {
   loading: false,
   onClickMorePressed: () => {},
+  list: [],
+  title: 'List Pokemon',
+  showLoadMore: true,
+  detailRedirect: (pokemon) => `/detail/${pokemon.id}`,
 };
 
 Landing.propTypes = {
   loading: PropTypes.bool,
   onClickMorePressed: PropTypes.func,
+  list: PropTypes.arrayOf(Object),
+  title: PropTypes.string,
+  showLoadMore: PropTypes.bool,
+  detailRedirect: PropTypes.func,
 };
